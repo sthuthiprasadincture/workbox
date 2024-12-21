@@ -1,0 +1,253 @@
+<mvc:View controllerName="project1.controller.MyTasks"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    xmlns:ui="sap.ui.table"
+    xmlns:u="sap.ui.unified">
+    <Page showHeader="false" visible="{}" class=" wbMainPagePadding customPinkPage" enableScrolling="true">
+        <VBox visible="{}">
+            <OverflowToolbar style="Clear" design="Transparent" class="toolbar">
+                <Label text="My Tasks" design="Bold" class="sapUiMediumMarginBegin wbCustomHeaderLabel" />
+                <ToolbarSpacer />
+                <Button visible="{}" text="Mass Action POD" press="onMassUploadPODPress" tooltip="Mass Action POD" class="Btn_MUP" icon="sap-icon://navigation-down-arrow" iconFirst="false" />
+                <Button visible="{}" text="Update Destroyed Qty" press="onUpdateDestroyedQuantity" tooltip="Update Destroyed Qty" class="Btn_MUP sapUiSmallMarginEnd" icon="sap-icon://navigation-down-arrow" iconFirst="false" />
+            </OverflowToolbar>
+
+            <HeaderContainer class="Card_Cntr" showDividers="false" visible="{}">
+                <GenericTile class="sapUiTinyMarginBegin Tile_main" header="Pending Tasks" press="fetchGraphDetailFn" subheader=" ">
+                    <TileContent footer="43" class="">
+                        <content>
+                            <core:Icon src="sap-icon://create-form" class="statusIcon" color="white" backgroundColor="#075eb5" size="20px" decorative="true" width="2rem" height="2rem" />
+                        </content>
+                    </TileContent>
+                </GenericTile>
+                <GenericTile class="sapUiTinyMarginBegin Tile_main" header="Approved by Me" press="fetchGraphDetailFn" subheader=" ">
+                    <TileContent footer="12" class="">
+                        <content>
+                            <!-- <ImageContent src="images/CN_Issued.png" /> -->
+                            <!-- <ImageContent src="images/CN_Issued.webp" /> -->
+                            <core:Icon src="sap-icon://task" class="statusIcon" color="white" backgroundColor="#27AE60" size="20px" decorative="true" width="2rem" height="2rem" />
+                        </content>
+                    </TileContent>
+                </GenericTile>
+                <GenericTile class="sapUiTinyMarginBegin Tile_main" header="Rejected by Me" press="fetchGraphDetailFn" subheader=" ">
+                    <TileContent footer="03" class="">
+                        <content>
+                            <core:Icon src="sap-icon://sys-cancel" class="statusIcon" color="white" backgroundColor="#e50b3d" size="20px" decorative="true" width="2rem" height="2rem" />
+                        </content>
+                    </TileContent>
+                </GenericTile>
+                <GenericTile class="sapUiTinyMarginBegin Tile_main" header="All" press="fetchGraphDetailFn" subheader=" ">
+                    <TileContent footer="09" class="">
+                        <content>
+                            <core:Icon src="sap-icon://course-book" class="statusIcon" color="white" backgroundColor="#800080" size="20px" decorative="true" width="2rem" height="2rem" />
+                        </content>
+                    </TileContent>
+                </GenericTile>
+            </HeaderContainer>
+        </VBox>
+
+        <VBox>
+            <HBox justifyContent="SpaceBetween" class="wbOverflowVertical wbTableViewPaddingClass">
+                <HBox>
+                    <CheckBox select="onTaskListSelect"/>
+                    <Button text="Tasks List" class="sapUiLargeMarginEnd" press="onWorkBoxClick" />
+                    <Button text="Admin Inbox" class="sapUiLargeMarginEnd" press="onAdminBoxClick" />
+                    <Button text="Forward Tasks" class="sapUiLargeMarginEnd" press="onForwardBoxClick" />
+                    <SearchField id="searchField" width="auto" search=".onFilterPosts" />
+                </HBox>
+
+                <HBox justifyContent="End">
+                    <Button icon="sap-icon://filter" text="Filter" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://refresh" text="Reload" class="sapUiTinyMarginEnd" />
+                    <Button icon="sap-icon://download" text="Download" />
+                </HBox>
+            </HBox>
+
+            <!-- table 1 -->
+
+            <VBox class="wbOverflowVertical wbTableViewPaddingClass" height="100%" width="100%">
+                <Table id="myTable" items="{workBox>/workBoxDtos}" growing="true" growingScrollToLoad="true" mode="MultiSelect" class="sapUiSmallMarginTop wbUiTableStyles" visible="{viewModel>/isWorkBoxVisible}">
+                    <columns>
+                        <Column>
+                            <Text text="Request ID" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Task Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Created By" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Brand" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Type" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Sold To Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Reason" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Action" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" class="headingLabel" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{workBox>requestId}" />
+                                <Text text="{workBox>taskDescription}" />
+                                <Text text="{workBox>startedByDisp}" />
+                                <Text text="{workBox>brand}" />
+                                <Text text="{workBox>processDisplayName}" />
+                                <Text text="{workBox>soldToName}" />
+                                <Text text="{workBox>returnReason}" />
+                                <!-- <VBox class="actionBox"> -->
+                                <Text text="{workBox>action}" class="actionBox" />
+                                <!-- </VBox> -->
+                                <Text text="{workBox>businessStatus}"  class="statusBox"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+            <!-- table 2 -->
+
+            <VBox class="wbOverflowVertical wbTableViewPaddingClass" height="100%" width="100%">
+                <Table id="myTable1" items="{adminBox>/adminBoxDtos}" growing="true" growingScrollToLoad="true" mode="MultiSelect" class="sapUiSmallMarginTop wbUiTableStyles" visible="{viewModel>/isAdminBoxVisible}" >
+                    <columns>
+                        <Column>
+                            <Text text="Request ID" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Task Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Created By" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Brand" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Type" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Sold To Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Reason" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Action" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" class="headingLabel" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{adminBox>requestId}" />
+                                <Text text="{adminBox>taskDescription}" />
+                                <Text text="{adminBox>startedByDisp}" />
+                                <Text text="{adminBox>brand}" />
+                                <Text text="{adminBox>processDisplayName}" />
+                                <Text text="{adminBox>soldToName}" />
+                                <Text text="{adminBox>returnReason}" />
+                                <Text text="{adminBox>action}"  class="businessAction"/>
+                                <Text text="{adminBox>businessStatus}"  class="businessBox"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+            <!-- Table 3 -->
+
+            <VBox class="wbOverflowVertical wbTableViewPaddingClass" height="100%" width="100%" >
+                <Table id="myTable2" items="{forwardBox>/forwardBoxDtos}" growing="true" growingScrollToLoad="true" mode="MultiSelect" class="sapUiSmallMarginTop wbUiTableStyles" visible="{viewModel>/isFowardBoxVisible}">
+                    <columns >
+                        <Column >
+                            <Text text="Request ID" class="headingLabel" wrapping="true" width="5rem"  />
+                        </Column>
+                        <Column>
+                            <Text text="Task Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Created By" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Brand" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Type" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Sold To Name" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Claim Reason" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Action" class="headingLabel" />
+                        </Column>
+                        <Column>
+                            <Text text="Status" class="headingLabel" />
+                        </Column>
+                    </columns>
+
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{forwardBox>requestId}" />
+                                <Text text="{forwardBox>taskDescription}" />
+                                <Text text="{forwardBox>startedByDisp}" />
+                                <Text text="{forwardBox>brand}" />
+                                <Text text="{forwardBox>processDisplayName}" />
+                                <Text text="{forwardBox>soldToName}" />
+                                <Text text="{forwardBox>returnReason}" />
+                                <Text text="{forwardBox>action}" class="fowardAction"/>
+                                <Text text="{forwardBox>businessStatus}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+
+        </VBox>
+
+        <HBox renderType="Bare" alignItems="Center" class="wbInboxPaginationClass">
+            <Button icon="sap-icon://nav-back" class="wbInboxPaginationLinkClass" press="onScrollLeft" />
+        <HBox renderType="Bare" alignItems="Center" >
+        <Link id="totalPageNumber" text="" />
+        </HBox>
+
+        <Button icon="sap-icon://navigation-right-arrow" enabled="" class="wbInboxPaginationLinkClass" press="onScrollRight" />
+        <Label text="Show" class="sapUiTinyMarginEnd" />
+        <Select forceSelection="false" change="onClickFilterDetail" selectedKey="50" class="SltBox" id="selectedCount">
+            <core:Item key="50" text="50" />
+            <core:Item key="100" text="100" />
+            <core:Item key="All" text="All" />
+        </Select>
+    </HBox>
+    <footer>
+        <Toolbar class="footerToolbarEnch">
+            <core:Fragment fragmentName="project1.fragment.ELC_Footer" type="XML" />
+        </Toolbar>
+    </footer>
+</Page>
+</mvc:View>

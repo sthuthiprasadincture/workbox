@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+    <HBox width="100%" class="footerWrapperEnch" >
+        <ImageContent class="footerImgContentEnch" src="./images/ELC-logo.svg" description="ELC Logo" />
+        <HBox class="footerLinksWrapper">
+            <Link class="footerLinkEnch" text="Privacy Policy" target="_blank" href="https://am-qa.elcompanies.com/openam/PrivacyPolicy.html" />
+            <Link class="footerLinkEnch" text="Terms &amp; Conditions" target="_blank" href="https://www.esteelauder.com/terms-conditions"  />
+        </HBox>
+        <Label class="footerTextEnch" text="Copyright &#169; 2022 " />
+    </HBox>
+</core:FragmentDefinition>
