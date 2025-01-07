@@ -92,6 +92,10 @@
             "viewName": "project1.view.App",
             "type": "XML",
             "id": "App"
+        },
+        "sap.cloud": {
+        "public": true,
+        "service": "workbox"
         }
     }
 }

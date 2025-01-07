@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.f">
+	<Popover class="sapUiSizeCompact" placement="Bottom" title="" showHeader="false">
+		<content>
+            <VBox height="6rem">
+			    <Button class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop BasicBtn" text="Download file" press="onDownloadforDQUpdation" width="7rem"></Button>
+			    <u:FileUploader class="sapUiSmallMarginBeginEnd BasicBtn" change="onUploadforDQUpdation" fileAllowed="fileAllowed" multiple="true"
+				buttonText="Upload File" sameFilenameAllowed="false" buttonOnly="true" value="" width="150px"/>
+            </VBox>
+        </content>
+	</Popover>
+</core:FragmentDefinition>

@@ -1,0 +1,221 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+	xmlns:ui="sap.ui.table"
+	xmlns="sap.m">
+	<VBox class="wbOverflowVertical wbTableViewPaddingClass" height="100%" width="100%">
+
+		<ui:Table id="ID_TASK_TABLE" rows="{workBox>/workBoxDtos}" selectionMode="MultiToggle" busy="{}" ariaLabelledBy="title" rowSelectionChange="onRowSelectionChange" cellClick="fetchDetailsFn" enableCellFilter="true" showNoData="true" enableSelectAll="false" class="sapUiSmallMarginTop wbUiTableStyles" busyIndicatorDelay="0" beforeOpenContextMenu="openActionFragmentFn" alternateRowColors="false" visible="{viewModel>/isWorkBoxVisible}">
+			<ui:columns>
+				<ui:Column visible="true" sortProperty="requestId">
+					<Label text="Request ID" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>requestId}" tooltip="{}" wrapping="false" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="taskDescription">
+					<Label text="Task Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>taskDescription}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="startedByDisp">
+					<Label text="Created by" class="headingLabel"/>
+					<ui:template>
+						<VBox>
+							<Label text="{workBox>startedByDisp}" tooltip="{}" class="headerLabelClass"/>
+
+						</VBox>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="{}" sortProperty="brand">
+					<Label text="Brand" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>brand}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="processDisplayName">
+					<Label text="Claim Type" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>processDisplayName}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="soldToName">
+					<Label text="Sold To Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>soldToName}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="returnReason">
+					<Label text="Claim Reason" class="headingLabel"/>
+					<ui:template>
+						<Label text="{workBox>returnReason}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="action">
+					<Label text="Action" class="headingLabel "/>
+					<ui:template>
+						<ObjectStatus class="" text="{workBox>action}" state="{path:'workBox>action', formatter:'.formatter.state'}" icon="" press="onPressStatus" inverted="true" active="true"/>
+					</ui:template>
+				</ui:Column>
+
+				<ui:Column visible="true" sortProperty="businessStatus">
+					<Label text="{i18n>Status}" class="headingLabel"/>
+
+					<ui:template>
+						<ObjectStatus text="{workBox>businessStatus}" state="{path:'workBox>businessStatus', formatter:'.formatter.state'}" inverted="true" active="true" />
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="4rem" visible="false">
+					<Label text=""/>
+					<ui:template>
+						<Button icon="sap-icon://vertical-grip" press="handleDetailsPress" type="Transparent"/>
+					</ui:template>
+				</ui:Column>
+			</ui:columns>
+		</ui:Table>
+
+		<!-- Table 2 -->
+
+		<ui:Table id="ID_TASK_TABLE1" rows="{adminBox>/adminBoxDtos}" selectionMode="MultiToggle" busy="{}" ariaLabelledBy="title" rowSelectionChange="wbTableSelect" cellClick="fetchDetailsFn" enableCellFilter="true" showNoData="true" enableSelectAll="false" class="sapUiSmallMarginTop wbUiTableStyles" busyIndicatorDelay="0" beforeOpenContextMenu="openActionFragmentFn" alternateRowColors="false" visible="{viewModel>/isAdminBoxVisible}">
+			<ui:columns>
+				<ui:Column visible="true" sortProperty="requestId">
+					<Label text="Request ID" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>requestId}" tooltip="{}" wrapping="false" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="taskDescription">
+					<Label text="Task Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>taskDescription}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="startedByDisp">
+					<Label text="Created by" class="headingLabel"/>
+					<ui:template>
+						<VBox>
+							<Label text="{adminBox>startedByDisp}" tooltip="{}" class="headerLabelClass"/>
+							<Label text="{path:'oTaskInboxModel>createdAt', formatter:'.formatter.wbDateFormatter'}" class="headerLabelClass"/>
+						</VBox>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="{}" sortProperty="brand">
+					<Label text="Brand" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>brand}" tooltip="{oTaskInboxModel>brand}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="processDisplayName">
+					<Label text="Claim Type" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>processDisplayName}" tooltip="{oTaskInboxModel>processDisplayName}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="soldToName">
+					<Label text="Sold To Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>soldToName}" tooltip="{oTaskInboxModel>soldToName}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="returnReason">
+					<Label text="Claim Reason" class="headingLabel"/>
+					<ui:template>
+						<Label text="{adminBox>returnReason}" tooltip="{oTaskInboxModel>returnReason}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="action">
+					<Label text="Action" class="headingLabel"/>
+					<ui:template>
+						<ObjectStatus text="{adminBox>action}" state="{path:'adminBox>action', formatter:'.formatter.state'}" icon="" press="onPressStatus" inverted="true" active="true"/>
+					</ui:template>
+				</ui:Column>
+
+				<ui:Column visible="true" sortProperty="businessStatus">
+					<Label text="{i18n>Status}" class="headingLabel"/>
+
+					<ui:template>
+						<ObjectStatus text="{adminBox>businessStatus}" state="{path:'adminBox>businessStatus', formatter:'.formatter.state'}" icon="" press="onPressStatus" inverted="true" active="true"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="4rem" visible="false">
+					<Label text=""/>
+					<ui:template>
+						<Button icon="sap-icon://vertical-grip" press="handleDetailsPress" type="Transparent"/>
+					</ui:template>
+				</ui:Column>
+			</ui:columns>
+		</ui:Table>
+
+		<!-- table 3  -->
+
+		<ui:Table id="ID_TASK_TABLE2" rows="{forwardBox>/forwardBoxDtos}" selectionMode="MultiToggle" busy="{}" ariaLabelledBy="title" rowSelectionChange="wbTableSelect" cellClick="fetchDetailsFn" enableCellFilter="true" showNoData="true" enableSelectAll="false" class="sapUiSmallMarginTop wbUiTableStyles" busyIndicatorDelay="0" beforeOpenContextMenu="openActionFragmentFn" alternateRowColors="false" visible="{viewModel>/isFowardBoxVisible}">
+			<ui:columns>
+				<ui:Column visible="true" sortProperty="requestId">
+					<Label text="Request ID" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>requestId}" tooltip="{}" wrapping="false" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="taskDescription">
+					<Label text="Task Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>taskDescription}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="startedByDisp">
+					<Label text="Created by" class="headingLabel"/>
+					<ui:template>
+						<VBox>
+							<Label text="{forwardBox>startedByDisp}" tooltip="{}" class="headerLabelClass"/>
+							<Label text="{path:'oTaskInboxModel>createdAt', formatter:'oneapp.incture.workbox.util.formatter.wbDateFormatter'}" class="headerLabelClass"/>
+						</VBox>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="{}" sortProperty="brand">
+					<Label text="Brand" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>brand}" tooltip="{}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="processDisplayName">
+					<Label text="Claim Type" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>processDisplayName}" tooltip="{oTaskInboxModel>processDisplayName}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="soldToName">
+					<Label text="Sold To Name" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>soldToName}" tooltip="{oTaskInboxModel>soldToName}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="returnReason">
+					<Label text="Claim Reason" class="headingLabel"/>
+					<ui:template>
+						<Label text="{forwardBox>returnReason}" tooltip="{oTaskInboxModel>returnReason}" class="headerLabelClass"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column visible="true" sortProperty="action">
+					<Label text="Action" class="headingLabel"/>
+					<ui:template>
+						<ObjectStatus text="{forwardBox>action}" state="{path:'forwardBox>action', formatter:'.formatter.state'}" icon="" press="onPressStatus" inverted="true" active="true"/>
+					</ui:template>
+				</ui:Column>
+
+				<ui:Column visible="true" sortProperty="businessStatus">
+					<Label text="{i18n>Status}" class="headingLabel"/>
+
+					<ui:template>
+						<ObjectStatus text="{forwardBox>businessStatus}" state="{path:'forwardBox>businessStatus', formatter:'.formatter.state'}" icon="" press="onPressStatus" inverted="true" active="true"/>
+					</ui:template>
+				</ui:Column>
+				<ui:Column width="4rem" visible="false">
+					<Label text=""/>
+					<ui:template>
+						<Button icon="sap-icon://vertical-grip" press="handleDetailsPress" type="Transparent"/>
+					</ui:template>
+				</ui:Column>
+			</ui:columns>
+		</ui:Table>
+
+	</VBox>
+</core:FragmentDefinition>

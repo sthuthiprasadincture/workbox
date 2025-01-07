@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:f="sap.f">
+	<Popover class="sapUiSizeCompact List_Filter" placement="Bottom" modal="true" xmlns:f="sap.ui.layout.form" title="Attachments" contentWidth="25%" >
+		<content>
+			<HBox class="sapUiTinyMarginTop" visible="{}" alignItems="Center">
+				<Text text="Attach Files" class="sapUiTinyMarginBegin Cmt_LblPost"/>
+				<u:FileUploader tooltip="Upload your file" change="onFileUploadChange" fileAllowed="fileAllowed" icon="sap-icon://open-folder"
+					class="sapUiTinyMarginBegin Btn_MUP" multiple="true" buttonText="Select a file" sameFilenameAllowed="false" buttonOnly="true"
+					value="{}" enabled="true"/>
+			</HBox>
+			
+			<Table items="{}" mode="SingleSelectMaster" alternateRowColors="false"
+				selectionChange="onDownloadAttachment" growing="true" growingThreshold="5" growingScrollToLoad="true" sticky="ColumnHeaders" class="listTable">
+				<columns>
+					<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline">
+						<Label text="{i18n>File}" wrapping="true" design="Bold" tooltip="{i18n>File}"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" visible="{}">
+						<Label text="" wrapping="false" design="Bold"/>
+					</Column>
+				</columns>
+				<ColumnListItem>
+					<Text text="{}"/>
+					<HBox width="100%" alignItems="End">
+						<Button icon="sap-icon://delete" press="onRemoveAttachmennt" class="sapUiLargeMarginBegin icon_Set" tooltip="{i18n>Delete}"
+							enabled="{}"/>
+					</HBox>
+				</ColumnListItem>
+			</Table>
+		</content>
+		<endButton>
+			<Button icon="sap-icon://decline" press="onCancelPress"/>
+		</endButton>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+					<Button text="{i18n>Upload}" press="fnMassUploadPOD" type="Default" visible="{}" class="ApplyBtn"/>
+					<Button text="{i18n>Cancel}" press="onCancelPress" type="Default" class="ClearBtn"/>
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>
